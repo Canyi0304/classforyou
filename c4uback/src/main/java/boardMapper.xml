@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.RepBoardMapper">
+  <select id="selectByBoard_no" resultType="com.my.vo.RepBoard"><!-- resultType은 객체가 자동으로 생성해서 반환 -->
+    SELECT * FROM repboard WHERE board_no = #{board_no}
+  </select>
+  <select id="selectAll" resultType="com.my.vo.RepBoard">
+  	SELECT level, repboard.*
+				FROM repboard
+				START WITH parent_no = 0 
+				CONNECT BY PRIOR board_no = parent_no 
+				ORDER SIBLINGS BY board_no DESC
+  </select>
+  <select id="selectByBoard_titleORBoard_writer"
+  		  parameterType="java.lang.String" 
+  		  resultType="com.my.vo.RepBoard">
+  <!-- parameterType은 생략 가능, 생략하면 전달된 값의 타입 -->
+   <!--   SELECT * FROM repboard WHERE board_title LIKE #{word} OR board_writer LIKE #{word} -->
+  	<!--  ORDER BY board_no ${o} -->
+  	 SELECT * FROM repboard WHERE board_title LIKE '%${word}%' OR board_writer LIKE '%${word}%'
+  	ORDER BY ${o}
+  </select>
+<!--<insert id="insert" parameterType="com.my.vo.RepBoard">
+     INSERT INTO repboard(board_no, parent_no, board_title, board_writer, board_dt, board_pwd, board_cnt) VALUES (board_seq.NEXTVAL, #{parent_no}, #{board_title}, #{board_writer}, SYSDATE, #{board_pwd}, 0)
+  	</insert>  -->
+   
+   <insert id="insert" parameterType="java.util.Map">
+     INSERT INTO repboard(board_no, parent_no, board_title, board_writer, board_dt, board_pwd, board_cnt) VALUES (board_seq.NEXTVAL, 0, #{board_title}, #{board_writer}, SYSDATE, #{board_pwd}, 0)
+  </insert> 
+  
+  <update id="updateBoardCnt"
+  		  parameterType="java.lang.Integer">
+  		  UPDATE repboard SET board_cnt = board_cnt+1
+  		  WHERE board_no=#{board_no}
+  </update>
+  
+  <delete id="delete"
+  		  parameterType="java.util.HashMap">
+  		  DELETE repboard  where board_no =#{board_no}  
+  		  AND board_pwd = #{board_pwd}
+  </delete>
+  
+  <update id="update" parameterType="map">
+  UPDATE repboard
+  <set>
+  <if test ="board.board_title != null">board_title=#{board.board_title},</if>
+  <if test="board.board_pwd != null">board_pwd=#{board.board_pwd}</if>
+  </set>
+  WHERE board_no = #{board.board_no} AND board_pwd = #{board_pwd}
+  </update>
+</mapper>
