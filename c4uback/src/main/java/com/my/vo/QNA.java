@@ -7,7 +7,11 @@ public class QNA {
 	private String qnaTitle;
 	private Date qnaDate;
 	private String qnaContent;
+<<<<<<< HEAD
 	private String qnaComment; //ï¿½Ê±â°ª null ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½ X
+=======
+	private String qnaComment; //ÃÊ±â°ª null °¡´ÉÀÌ¶ó »ý¼ºÀÚ¿¡ º¯¼ö X
+>>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 	private Student student;
 	public QNA(int qnaId, String qnaTitle, Date qnaDate, String qnaContent, Student student) {
 		super();

@@ -2,7 +2,13 @@ package com.my.dao;
 
 import java.util.List;
 
+<<<<<<< HEAD
 import com.my.exception.FindException;
+=======
+import com.my.exception.AddException;
+import com.my.exception.FindException;
+import com.my.exception.ModifyException;
+>>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 import com.my.vo.Lesson;
 
 public interface LessonDAO {
@@ -30,6 +36,42 @@ public interface LessonDAO {
 	 */
 	public List<Lesson> selectByUnion(String union) throws FindException;
 	
+<<<<<<< HEAD
+=======
+	/**
+	 * 강좌 개설 신청
+	 * @param lesson 학생 아이디, 강좌명, 목표금액, 개강일,
+					수강료, 한줄소개, 레슨 카테고리 아이디
+	 * @throws AddException 
+	 */
+	public void insert(Lesson lesson) throws AddException;
+	
+	/**
+	 * 강좌 개설 재심사 신청
+	 * @param lesson 수정된 강좌 정보들
+	 * @throws ModifyException 
+	 */
+	public void update(Lesson lesson) throws ModifyException;
+	
+	
+	/**
+	 * 선생님 회원이 개설한 강좌수 조회 
+	 * @param 학생 아이디
+	 * @return 개설한 강좌수
+	 * @throws FindException 회원 아이디에 해당하는 강좌가 없을 때 예외 발생
+	 */
+	public int selectByTeacherIdCnt(int studentId) throws FindException;
+	
+	/**
+	 * 
+	 * @param lesson_id
+	 * @param student_email
+	 * @return
+	 * @throws FindException
+	 */
+	public List<Lesson> selectById(int lesson_id, String student_email) throws FindException;
+	
+>>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 	public int selectAllCount() throws FindException;
 	
 	public List<Lesson> selectByPage(int currPage, int dataPerPage) throws FindException;

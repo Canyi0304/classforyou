@@ -41,6 +41,10 @@ public interface StudentDAO {
 	    * @throws FindException
 	    */
 	   public abstract Student selectByPwd(String inputPwd) throws FindException;
+<<<<<<< HEAD
+=======
+	   
+>>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 	   /**회원가입시 학생 추가
 	    * 저장소에 학생정보를 저장한다
 	    * @param s 학생 객체
@@ -49,6 +53,16 @@ public interface StudentDAO {
 	    */
 	   public abstract void insert(Student s) throws AddException;
 	   
+<<<<<<< HEAD
+=======
+	   /**
+	    * 학생 회원 경고 주기
+	    * @param studentId 학생 아이디
+	    * @throws AddException
+	    */
+	   public void insertPenalty(int studentId) throws AddException;
+	   
+>>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 	   /**회원 정보 수정
 	    * 학생정보를 수정한다. 단, 아이디는 수정할 수 없다
 	    * @param s  변경될 내용이 담겨있는 학생객체
@@ -67,4 +81,41 @@ public interface StudentDAO {
 	    */
 	   public abstract Student update(Student s, String inputPwd) throws ModifyException;
 	   
+<<<<<<< HEAD
+=======
+	   
+	   
+	   
+//	   public List<Student> selectAll (int)
+	   
+	   
+	   /**
+	    * 회원 전체 조회 및 검색
+	    * @param currentPage 현재 페이지
+	    * @param cntPerPage 페이지 당 목록수
+	    * @param word 검색어
+	    * @return 회원 전체 리스트 또는 검색어에 해당하는 회원 
+	    * @throws FindException 검색어에 해당하는 회원이나 회원이 한 명도 없을 경우 예외 발생
+	    */
+	   public List<Student> selectStudentList(int currentPage, int cntPerPage, String word) throws FindException;
+	   
+	   /**
+	    * 관리자의 회원 탈퇴처리
+	    * @param studentId 학생 아이디
+	    * @throws RemoveException 탈퇴처리 실패시 예외 발생
+	    */
+	   public void updateStatus(int studentId) throws RemoveException;
+	   
+	   /**
+	    * 관리자 비밀번호 변경
+	    * @param student
+	    * @param certifyPwd 기존 비밀번호
+	    * @throws ModifyException 비밀번호 수정실패 시 예외 발생
+	    */
+	   public void updateAdminPwd (Student student, String certifyPwd) throws ModifyException;
+	   
+	   
+	   public int selectCnt() throws FindException;
+	   
+>>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 }
