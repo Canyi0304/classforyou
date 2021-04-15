@@ -41,7 +41,10 @@ public interface StudentDAO {
 	    * @throws FindException
 	    */
 	   public abstract Student selectByPwd(String inputPwd) throws FindException;
+<<<<<<< HEAD
+=======
 	   
+>>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 	   /**회원가입시 학생 추가
 	    * 저장소에 학생정보를 저장한다
 	    * @param s 학생 객체
@@ -50,6 +53,8 @@ public interface StudentDAO {
 	    */
 	   public abstract void insert(Student s) throws AddException;
 	   
+<<<<<<< HEAD
+=======
 	   /**
 	    * 학생 회원 경고 주기
 	    * @param studentId 학생 아이디
@@ -57,6 +62,7 @@ public interface StudentDAO {
 	    */
 	   public void insertPenalty(int studentId) throws AddException;
 	   
+>>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 	   /**회원 정보 수정
 	    * 학생정보를 수정한다. 단, 아이디는 수정할 수 없다
 	    * @param s  변경될 내용이 담겨있는 학생객체
@@ -75,6 +81,8 @@ public interface StudentDAO {
 	    */
 	   public abstract Student update(Student s, String inputPwd) throws ModifyException;
 	   
+<<<<<<< HEAD
+=======
 	   
 	   
 	   
@@ -109,4 +117,5 @@ public interface StudentDAO {
 	   
 	   public int selectCnt() throws FindException;
 	   
+>>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 }
