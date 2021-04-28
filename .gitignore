@@ -1,6 +1,9 @@
 /.metadata/
-/*/.settings/
-/*/.classpath/
-/*/.project/
+/c4uback/.settings/
+/c4uback/.classpath/
+/c4uback/.project/
 /c4uback/.springBeans/
 /c4uback/target/
+/c4ufront/.settings/
+/c4ufront/.classpath/
+/c4ufront/.project/
