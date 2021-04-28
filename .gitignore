@@ -1,6 +1,4 @@
 /.metadata/
 c4uback/bin
 c4uback/target/
-c4uback/.classpath
-c4ufront/.classpath
 c4ufront/build
