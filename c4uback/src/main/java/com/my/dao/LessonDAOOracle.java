@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -225,14 +226,77 @@ public class LessonDAOOracle implements LessonDAO {
 
 	@Override
 	public int selectByTeacherIdCnt(int studentId) throws FindException {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
+
+
 	@Override
-	public List<Lesson> selectById(int lesson_id, String student_email) throws FindException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Lesson> selectByLessonOpen(int studentId) throws FindException {
+		SqlSession session = null;
+	try {	
+		session = sqlSessionFactory.openSession();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("student_id", studentId);
+		//map.put("lesson_id", lessonId);
+		List<Lesson> list = session.selectList("mybatis.LessonMapper.selectByLessonOpen", map);
+		if(list.size() == 0) {
+			throw new FindException("개설한 강좌가 없습니다.");
+		}
+		return list;
+		}catch (Exception e) {
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) session.close();
+		}
+	}
+
+	@Override
+	public List<Lesson> selectBySearch(String word) throws FindException {
+
+		SqlSession session = null;
+	try {	
+		session = sqlSessionFactory.openSession();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("word", word);
+		List<Lesson> list = session.selectList("mybatis.LessonMapper.selectByLessonSearch", map);
+		if(list.size() == 0 ) {
+			throw new FindException("검색결과가 없습니다.");
+		}
+		return list;
+		}catch (Exception e) {
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) session.close();
+		}
+	}
+
+	@Override
+	public List<Lesson> selectByLessonStatus01234(int studentId, List<Integer> lessonStatus) throws FindException {
+		
+		SqlSession session = null;
+		try {	
+			session = sqlSessionFactory.openSession();
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("student_id", studentId);
+			map.put("lesson_status", lessonStatus);
+			List<Lesson> list = session.selectList("mybatis.LessonMapper.selectByLessonStatus01234", map);
+			if(list.size() == 0) {
+				throw new FindException("개설한 강좌가 없습니다.");
+			}
+			return list;
+			}catch (Exception e) {
+				throw new FindException(e.getMessage());
+			}finally {
+				if(session != null) session.close();
+			}
+	}
+
+	@Override
+	public int selectAllCount() throws FindException {
+	
+		return 0;
 	}
 
 	//	public static void main(String[]args) {

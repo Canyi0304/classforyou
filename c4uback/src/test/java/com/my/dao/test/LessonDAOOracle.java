@@ -1,9 +1,11 @@
 package com.my.dao.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.my.dao.CategoryDAO;
 import com.my.dao.LessonDAO;
@@ -26,6 +29,7 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class) //Juni4인 경우
 
 //Spring 컨테이너용 XML파일 설정
+//@WebAppConfiguration
 @ContextConfiguration(locations={
 		"file:src/main/webapp/WEB-INF/spring/root-context.xml", 
 		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
@@ -99,4 +103,56 @@ public class LessonDAOOracle {
 		assertEquals(expCategoryId, lesson.getLessonCategory());
 		assertEquals(lessonDescription, lesson.getLessonDescription());
 	}
+	
+	//내가 개설한 강좌
+		//@Test
+		public void selectByLessonOpen(){
+			
+			int student_id = 5;
+			//int lesson_id = 1;
+		
+			try {
+				List<Lesson> list = dao.selectByLessonOpen(student_id);
+				assertNotNull(list);
+			} catch (FindException e) {
+				
+				e.printStackTrace();
+			}
+		}
+		
+		//내가 개설한 강좌 검색
+		//@Test
+		public void selectByLessonSearch() {
+			
+			//int student_id = 2;
+			//String lesson_name = "트";
+			//String category_name = "나누";
+			String word = "트";
+			try {
+				List<Lesson> list = dao.selectBySearch(word);
+				assertNotNull(list);
+			} catch (FindException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+		
+
+
+		//내가 개설한 강좌 체크박스 
+		@Test
+		public void selectByLessonStatus01234() {
+			int student_id = 5;
+			List<Integer> lesson_status = Arrays.asList(0,1,2,3,4);
+			//int lesson_status = 0;
+			
+			try {
+				List<Lesson> list = dao.selectByLessonStatus01234(student_id, lesson_status);
+				assertNotNull(list);
+			} catch (FindException e) {
+				
+				e.printStackTrace();
+			}
+		}
 }

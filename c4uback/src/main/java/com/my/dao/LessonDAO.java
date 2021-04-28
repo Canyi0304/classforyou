@@ -63,10 +63,27 @@ public interface LessonDAO {
 	 * @returnt
 	 * @throws FindException
 	 */
-	public List<Lesson> selectById(int lesson_id, String student_email) throws FindException;
+	//public List<Lesson> selectById(int lesson_id, String student_email) throws FindException;
+	List<Lesson> selectByLessonOpen(int studentId) throws FindException;
 	
 	public int selectCnt() throws FindException;
 	
+	
+	List<Lesson> selectBySearch(String word) throws FindException;
+	
 	public List<Lesson> selectByPage(int currPage, int dataPerPage) throws FindException;
+	
+	/*
+	 * @param studentId
+	 * @param lesson_status
+	 * @return
+	 * @throws FindException 해당 아이디에 개설한 강좌가 없을때 예외 발생
+	 * 
+	 */
+	List<Lesson> selectByLessonStatus01234 (int studentId, List<Integer> lesson_status) throws FindException;
+
+	public int selectAllCount() throws FindException;
+	
+	//List<Lesson> selectBySearch(int lessonId, int studentId, String union1, String union2) throws FindException;
 
 }

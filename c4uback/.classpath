@@ -35,7 +35,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/KOSTA_KBR/LIB/ojdbc6.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="A:/LIB/ojdbc6.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

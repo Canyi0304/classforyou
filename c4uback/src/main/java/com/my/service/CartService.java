@@ -29,8 +29,8 @@ public class CartService implements ICartService {
 	}
 
 	@Override
-	public Cart remove(int lessonId, int studentId) throws RemoveException {
-		return dao.delete(lessonId, studentId);
+	public void remove(int lessonId, int studentId) throws RemoveException {
+		 dao.delete(lessonId, studentId);
 	}
 
 	@Override

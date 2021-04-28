@@ -18,6 +18,7 @@
 		<typeAlias alias="Penalty" type="com.my.vo.Penalty"/>
 		<typeAlias alias="LessonPenaltyStatus" type="com.my.vo.LessonPenaltyStatus"/>
 		<typeAlias alias="LessonPenalty" type="com.my.vo.LessonPenalty"/>
+		<typeAlias alias="Cart" type="com.my.vo.Cart"/>
 	</typeAliases>
 	
   <environments default="development">
@@ -42,5 +43,6 @@
 	<mapper resource="studentMapper.xml"/>
 	<mapper resource="penaltyStatusMapper.xml"/>
 	<mapper resource="adminLessonMapper.xml"/>
+	<mapper resource="cartMapper.xml"/>
   </mappers>
 </configuration>
