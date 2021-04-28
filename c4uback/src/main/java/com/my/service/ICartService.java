@@ -3,7 +3,7 @@ package com.my.service;
 import java.util.List;
 
 import com.my.exception.AddException;
-import com.my.exception.DeleteException;
+import com.my.exception.RemoveException;
 import com.my.exception.FindException;
 import com.my.vo.Cart;
 import com.my.vo.Lesson;
@@ -16,7 +16,7 @@ public interface ICartService {
 	
 	void add(int lessonId, int studentId) throws AddException;
 	
-	Cart remove(int lessonId, int studentId) throws DeleteException;
+	Cart remove(int lessonId, int studentId) throws RemoveException;
 
 	int findAllCount() throws FindException;
 	
