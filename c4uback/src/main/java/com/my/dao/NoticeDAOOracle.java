@@ -1,213 +1,169 @@
 package com.my.dao;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.my.exception.AddException;
 import com.my.exception.FindException;
-import com.my.sql.MyConnection;
+import com.my.exception.ModifyException;
+import com.my.exception.RemoveException;
 import com.my.vo.Notice;
 
+import lombok.extern.log4j.Log4j;
+
+@Repository
+@Log4j
 public class NoticeDAOOracle implements NoticeDAO{
-
+	
+	@Autowired
+	private SqlSessionFactory sqlSessionFactory;
+	
 	@Override
-	public List<Notice> selectAll() throws FindException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
+	public List<Notice> selectPerPage(int currentPage, int cnt_per_page) throws FindException {
+		SqlSession session = null;
 		try {
-			con = MyConnection.getConnection();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new FindException(e.getMessage());
-		}
-		
-		String selectAllSQL = "select * from(\r\n" + 
-				"        select n.notice_title,  row_number() over (order by notice_id desc) as rnum\r\n" + 
-				"        from notice n\r\n" + 
-				"        )\r\n" + 
-				"        where rnum between 1 and 10";
-		List<Notice> all = new ArrayList<>();
-		try {
-			pstmt = con.prepareStatement(selectAllSQL);
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-//NOTICE_ID			NUMBER(5,0)
-//NOTICE_TITLE		VARCHAR2(100 BYTE)
-//NOTICE_DATE		DATE
-//NOTICE_CONTENT	VARCHAR2(2000 BYTE)
-				
-				String noticeTitle = rs.getString("notice_title");
-				Notice notice = new Notice( 0, noticeTitle, null, null);
-				all.add(notice);
+			session = sqlSessionFactory.openSession();
+			Map<String, Object> map = new HashMap<>();
+			map.put("currentPage", currentPage);
+			map.put("cnt_per_page", cnt_per_page);
+			List<Notice> list = session.selectList("mybatis.NoticeMapper.selectPerPage", map);
+			if(list.size()==0) {
+				throw new FindException("게시글이 없습니다.");
 			}
-			if(all.size() == 0) {
-				throw new FindException("공지사항이  하나도 없습니다");
-			}
-			return all;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new FindException(e.getMessage());
-		} finally {
-			MyConnection.close(con, pstmt, rs);
-		}
-	}
-
-	@Override
-	public Notice selectById(int NoticeId) throws FindException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			con = MyConnection.getConnection();
-		} catch (Exception e) {
-			throw new FindException(e.getMessage());
-		
-		}
-		
-		String selectByIdSQL = "select * from notice where notice_id=?";
-		try {
-			pstmt = con.prepareStatement(selectByIdSQL);
-			pstmt.setInt(1, NoticeId);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				int noticeId = rs.getInt("notice_id");
-				String noticeTitle = rs.getString("notice_title");
-				Date noticeDate = rs.getDate("notice_date");
-				String noticeContent = rs.getString("notice_content");
-				
-				Notice notice = new Notice(noticeId, noticeTitle, noticeDate, noticeContent);
-				return notice;
-			}else {
-				throw new FindException("상세페이지가 존재하지 않습니다.");
-			}
-			
-		} catch (SQLException e) {
-			
+			return list;
+		}catch (Exception e) {
 			throw new FindException(e.getMessage());
 		}finally {
-			MyConnection.close(con, pstmt, rs);
+			if(session != null) {
+				session.close();
+			}
 		}
 	}
-	
+
 	@Override
-	public int selectAllCount() throws FindException{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+	public int selectCnt() throws FindException {
+		SqlSession session = null;
 		try {
-			con = MyConnection.getConnection();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new FindException(e.getMessage());
-		}
-		String selectAllCountSQL = "SELECT COUNT (*) FROM notice";
-		try {
-			pstmt = con.prepareStatement(selectAllCountSQL);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				int selectAllCount = rs.getInt("COUNT(*)");
-				return selectAllCount;
-			}else {
-				throw new FindException("공지사항이 없습니다.");
+			session = sqlSessionFactory.openSession();
+			int cnt = session.selectOne("mybatis.NoticeMapper.selectCnt");
+			if(cnt == 0) {
+				throw new FindException("게시글이 없습니다.");
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+			return cnt;
+		}catch (Exception e) {
 			throw new FindException(e.getMessage());
 		}finally {
-			MyConnection.close(con,pstmt,rs);
+			if(session != null) {
+				session.close();
+			}
 		}
 	}
 
 	@Override
-	public List<Notice> selectByPage(int currPage, int dataPerPage) throws FindException{
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			con = MyConnection.getConnection();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new FindException(e.getMessage());
-		}
-		String selectByPageSQL = "SELECT * FROM (SELECT notice_id, notice_title, notice_date, notice_content, row_number() OVER (ORDER BY notice_id DESC) AS rnum FROM notice) WHERE rnum BETWEEN fun_start_row(?,?) AND fun_end_row(?,?)";
-		List<Notice> currPageList = new ArrayList<>();
-		try {
-			pstmt = con.prepareStatement(selectByPageSQL);
-			pstmt.setInt(1, currPage);
-			pstmt.setInt(2, dataPerPage);
-			pstmt.setInt(3, currPage);
-			pstmt.setInt(4, dataPerPage);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				int notice_id = rs.getInt("notice_id");
-				String notice_title = rs.getString("notice_title");
-				Date notice_date = rs.getDate("notice_date");
-				String notice_content = rs.getString("notice_content");
-				Notice notice = new Notice(notice_id, notice_title, notice_date, notice_content);
-				currPageList.add(notice);
-			}
-			if(currPageList.size()==0) {
-				throw new FindException("공지사항이 존재하지 않습니다.");
-			}
-			return currPageList;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new FindException(e.getMessage());
-		}
-	};
-	
-	@Override
-	public Notice selectByName(String NoticeName) throws FindException {
-		return null;
-	}
-	
-	
-  //공지사항리스트 테스트	
-//	public static void main(String[]args) {
-//
-//		NoticeDAOOracle dao = new NoticeDAOOracle();
-//		try {
-//	         List<Notice> list = dao.selectAll();
-//	         for(Notice n: list) {
-//	            System.out.println( n.getNoticeTitle());
-//	         }
-//	      } catch (FindException e) {
-//	         e.printStackTrace();
-//		}
+	public List<Notice> selectByTitlePerPage(String notice_title, int currentPage, int cnt_per_page)
+			throws FindException {
 		
-		//게시물 개수 세기
-//		int s;
-//		try {
-//			s = dao.selectAllCount();
-//			System.out.println(s);
-//		} catch (FindException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//	}
+		SqlSession session= null;
+		try {
+			session = sqlSessionFactory.openSession();
+			Map<String, Object> map = new HashMap<>();
+			map.put("notice_title", notice_title);
+			map.put("currentPage", currentPage);
+			map.put("cnt_per_page", cnt_per_page);
+			
+			List<Notice> list = session.selectList("mybatis.NoticeMapper.selectByTitlePerPage", map);
+			if(list.size()==0) {
+				throw new FindException("검색결과가 없습니다.");
+			}
+			return list;
+		}catch(Exception e) {
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+	}
+	
+	@Override
+	public Notice selectById(int notice_id) throws FindException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			Notice notice = session.selectOne("mybatis.NoticeMapper.selectById", notice_id);
+			if(notice == null) {
+				throw new FindException("일치하는 게시물이 없습니다.");
+			}
+			return notice;
+		}catch(Exception e) {
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+	}
 
-//  상세공지사항 테스트 
-//	public static void main(String[]args) {
-//		NoticeDAOOracle dao = new NoticeDAOOracle();
-//		int NoticeID = 2;
-//		Notice notice = new Notice();
-//		
-//		try {
-//			notice = dao.selectById(NoticeID);
-//			System.out.println(notice);
-//		} catch (FindException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	@Override
+	public Notice update(Notice notice) throws ModifyException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			int cnt = session.update("mybatis.NoticeMapper.update", notice);
+			if(cnt == 0) {
+				throw new ModifyException("수정된 게시글이 없습니다.");
+			}
+			return notice;			
+		}catch(Exception e) {
+			throw new ModifyException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+	}
+
+	@Override
+	public int delete(int notice_id) throws RemoveException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			int cnt = session.delete("mybatis.NoticeMapper.delete",notice_id);
+			if(cnt== 0) {
+				throw new RemoveException("삭제할 게시물이 없습니다.");
+			}
+			return notice_id;
+		}catch (Exception e) {
+			throw new RemoveException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+	}
+
+	@Override
+	public void insert(Notice notice) throws AddException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			int cnt = session.insert("mybatis.NoticeMapper.insert", notice);
+			if(cnt == 0) {
+				throw new AddException("공지사항 작성 실패!");
+			}
+		}catch(Exception e) {
+			throw new AddException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+		
+	}
 }

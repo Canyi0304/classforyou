@@ -10,18 +10,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-<<<<<<< HEAD
-import com.my.exception.FindException;
-=======
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
->>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 import com.my.sql.MyConnection;
-import com.my.vo.LPS;
 import com.my.vo.Lesson;
-import com.my.vo.Notice;
-import com.my.vo.Student;
 //수정
 public class LessonDAOOracle implements LessonDAO {
 
@@ -275,8 +268,6 @@ public class LessonDAOOracle implements LessonDAO {
 		}
 	}
 
-<<<<<<< HEAD
-=======
 	@Override
 	public void insert(Lesson lesson) throws AddException {
 		// TODO Auto-generated method stub
@@ -301,7 +292,6 @@ public class LessonDAOOracle implements LessonDAO {
 		return null;
 	}
 
->>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 //	public static void main(String[]args) {
 //		LessonDAOOracle dao = new LessonDAOOracle();
 //		try {

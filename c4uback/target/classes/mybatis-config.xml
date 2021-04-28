@@ -7,7 +7,11 @@
 		<property name="username" value="popcorn"/>
 	</properties>
 	<typeAliases>
-  		<typeAlias alias="RepBoard" type="com.my.vo.RepBoard"/>
+		<typeAlias alias="Lesson" type="com.my.vo.Lesson"/>
+		<typeAlias alias="Student" type="com.my.vo.Student"/>
+  		<typeAlias alias="Notice" type="com.my.vo.Notice" />
+  		<typeAlias alias="Cart" type="com.my.vo.Cart"/>
+  		<typeAlias alias="QNA" type="com.my.vo.QNA"/>
 	</typeAliases>
   <environments default="development">
 
@@ -24,6 +28,8 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="boardMapper.xml"/>
+    <mapper resource="noticeMapper.xml"/>
+    <mapper resource="cartMapper.xml"/>
+    <mapper resource="qnaMapper.xml"/>
   </mappers>
 </configuration>

@@ -5,14 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-<<<<<<< HEAD
-=======
 import java.util.List;
->>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
+import com.my.exception.RemoveException;
 import com.my.sql.MyConnection;
 import com.my.vo.Student;
 
@@ -311,8 +309,6 @@ public class StudentDAOOracle implements StudentDAO {
 			MyConnection.close(con,pstmt,rs);
 		}
 	}
-<<<<<<< HEAD
-=======
 
 	@Override
 	public List<Student> selectStudentList(int currentPage, int cntPerPage, String word) throws FindException {
@@ -343,6 +339,5 @@ public class StudentDAOOracle implements StudentDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
->>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 	
 }

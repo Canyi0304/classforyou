@@ -10,6 +10,11 @@ public class Notice {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date noticeDate;
 	private String noticeContent;
+	
+	public Notice() {
+		super();
+	}
+	
 	public Notice(int noticeId, String noticeTitle, Date noticeDate, String noticeContent) {
 		super();
 		this.noticeId = noticeId;
