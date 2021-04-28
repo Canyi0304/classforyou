@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.my.exception.AddException;
-import com.my.exception.DeleteException;
 import com.my.exception.FindException;
+import com.my.exception.RemoveException;
 import com.my.service.ILessonService;
 import com.my.service.IStudentService;
 import com.my.service.LessonService;
@@ -126,7 +126,7 @@ public class CartDAOOracle implements CartDAO {
 	}
 
 	@Override
-	public Cart delete(int lessonId, int studentId) throws DeleteException {
+	public Cart delete(int lessonId, int studentId) throws RemoveException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		Cart c = new Cart();
@@ -134,7 +134,7 @@ public class CartDAOOracle implements CartDAO {
 			con = MyConnection.getConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DeleteException(e.getMessage());
+			throw new RemoveException(e.getMessage());
 		}
 		String deleteSQL = "DELETE FROM cart WHERE CART_LESSON_ID = ? AND CART_STUDENT_ID = ?";
 		try {
@@ -143,11 +143,11 @@ public class CartDAOOracle implements CartDAO {
 			pstmt.setInt(2, studentId);
 			int rowcnt = pstmt.executeUpdate();
 			if(rowcnt != 1) { //삭제건수가 0건
-				throw new DeleteException("삭제실패: 아이디에 해당 고객이 없습니다");
+				throw new RemoveException("삭제실패: 아이디에 해당 고객이 없습니다");
 			}
 			return c;
 		}catch(SQLException e) {
-			throw new DeleteException(e.getMessage());
+			throw new RemoveException(e.getMessage());
 		}finally {
 			MyConnection.close(con, pstmt);
 		}

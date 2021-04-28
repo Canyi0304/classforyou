@@ -1,10 +1,10 @@
 package com.my.exception;
 
-public class DeleteException extends Exception {
-	public DeleteException() {
+public class RemoveException extends Exception {
+	public RemoveException() {
 		super();
 	}
-	public DeleteException(String message) {
+	public RemoveException(String message) {
 		super(message);
 	}
 }

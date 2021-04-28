@@ -7,7 +7,6 @@ import com.my.exception.FindException;
 import com.my.vo.QNA;
 
 public interface QNADAO {
-<<<<<<< HEAD
 	
 	/**
 	 **수강생이  qna 등록**
@@ -19,8 +18,6 @@ public interface QNADAO {
 	 *                      
 	 */
 	public abstract void insert(QNA qna) throws AddException; 
-=======
->>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 		
 	/**
 	 **1:1문의 전체 조회 계시판**
@@ -48,18 +45,5 @@ public interface QNADAO {
 	 * @throws FindException 1:1 문의가 없으면 예외 발생
 	 */
 	public abstract List<QNA> selectByName(String name) throws FindException;
-<<<<<<< HEAD
-=======
-	
-	/**
-	 **수강생이  qna 등록**
-	 * 
-	 * 저장소에 1:1문의하기를 추가한다
-	 * @param qna 1:1문의하기객체
-	 * @throws AddException 1:1문의하기가 이미 존재하는 경우,
-	 *                      저장소가 꽉찬경우 발생한다
-	 *                      
-	 */
-	public abstract void insert(QNA qna) throws AddException; 
->>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
+
 }

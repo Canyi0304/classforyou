@@ -6,10 +6,23 @@
 	<properties>
 		<property name="username" value="popcorn"/>
 	</properties>
+	<settings>
+    <setting name="jdbcTypeForNull" value="NULL" />
+  </settings>
+
 	<typeAliases>
-  		<typeAlias alias="RepBoard" type="com.my.vo.RepBoard"/>
+		<typeAlias alias="Category" type="com.my.vo.Category"/>
+		<typeAlias alias="Lesson" type="com.my.vo.Lesson"/>
+		<typeAlias alias="Student" type="com.my.vo.Student"/>
+		<typeAlias alias="PenaltyStatus" type="com.my.vo.PenaltyStatus"/>
+		<typeAlias alias="Penalty" type="com.my.vo.Penalty"/>
+		<typeAlias alias="LessonPenaltyStatus" type="com.my.vo.LessonPenaltyStatus"/>
+		<typeAlias alias="LessonPenalty" type="com.my.vo.LessonPenalty"/>
 	</typeAliases>
+	
   <environments default="development">
+
+
 
 <!--히카리 CP가 대신하는 environment 태그 comment 가능(사용하지 않으므로)-->
 <!--위 properties 태그도 필요 X-->
@@ -24,6 +37,10 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="boardMapper.xml"/>
+    <mapper resource="categoryMapper.xml"/>
+	<mapper resource="lessonMapper.xml"/>
+	<mapper resource="studentMapper.xml"/>
+	<mapper resource="penaltyStatusMapper.xml"/>
+	<mapper resource="adminLessonMapper.xml"/>
   </mappers>
 </configuration>

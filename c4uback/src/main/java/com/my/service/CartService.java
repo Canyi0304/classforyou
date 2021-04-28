@@ -5,7 +5,7 @@ import java.util.List;
 import com.my.dao.CartDAO;
 import com.my.dao.CartDAOOracle;
 import com.my.exception.AddException;
-import com.my.exception.DeleteException;
+import com.my.exception.RemoveException;
 import com.my.exception.FindException;
 import com.my.vo.Cart;
 import com.my.vo.Lesson;
@@ -29,7 +29,7 @@ public class CartService implements ICartService {
 	}
 
 	@Override
-	public Cart remove(int lessonId, int studentId) throws DeleteException {
+	public Cart remove(int lessonId, int studentId) throws RemoveException {
 		return dao.delete(lessonId, studentId);
 	}
 

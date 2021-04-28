@@ -28,7 +28,7 @@ public class LessonService implements ILessonService {
 
 	@Override
 	public int findAllCount() throws FindException {
-		return dao.selectAllCount();
+		return dao.selectCnt();
 	}
 
 	@Override

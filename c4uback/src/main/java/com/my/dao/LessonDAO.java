@@ -2,13 +2,9 @@ package com.my.dao;
 
 import java.util.List;
 
-<<<<<<< HEAD
-import com.my.exception.FindException;
-=======
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
->>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
 import com.my.vo.Lesson;
 
 public interface LessonDAO {
@@ -36,8 +32,6 @@ public interface LessonDAO {
 	 */
 	public List<Lesson> selectByUnion(String union) throws FindException;
 	
-<<<<<<< HEAD
-=======
 	/**
 	 * 강좌 개설 신청
 	 * @param lesson 학생 아이디, 강좌명, 목표금액, 개강일,
@@ -64,15 +58,15 @@ public interface LessonDAO {
 	
 	/**
 	 * 
-	 * @param lesson_id
-	 * @param student_email
-	 * @return
+	 * @param lesson_id 선생님 회원이 개설한 강좌 아이디 
+	 * @param student_email 선생님 회원 이메일
+	 * @returnt
 	 * @throws FindException
 	 */
 	public List<Lesson> selectById(int lesson_id, String student_email) throws FindException;
 	
->>>>>>> 46ca08275f8b870f43c777dd38650217b687c4e7
-	public int selectAllCount() throws FindException;
+	public int selectCnt() throws FindException;
 	
 	public List<Lesson> selectByPage(int currPage, int dataPerPage) throws FindException;
+
 }

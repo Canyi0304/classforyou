@@ -3,7 +3,7 @@ package com.my.dao;
 import java.util.List;
 
 import com.my.exception.AddException;
-import com.my.exception.DeleteException;
+import com.my.exception.RemoveException;
 import com.my.exception.FindException;
 import com.my.vo.Cart;
 import com.my.vo.Lesson;
@@ -34,9 +34,9 @@ public interface CartDAO {
 	 * 좋아요를 누른 프로젝트를 취소한다. 
 	 * @param lessonId, studentId 좋아요 취소를 누른 강좌와 로그인한 수강생ID 
 	 * @return Cart 좋아요를 누른 객체 - 학생, 프로젝트 정보 반환
-	 * @throws DeleteException 좋아요를 누르지 않은 강좌를 좋아요 취소할 경우 예외 발생
+	 * @throws RemoveException 좋아요를 누르지 않은 강좌를 좋아요 취소할 경우 예외 발생
 	 */
-	public Cart delete(int lessonId, int studentId) throws DeleteException;
+	public Cart delete(int lessonId, int studentId) throws RemoveException;
 	
 	List<Lesson> selectByPage(int currPage, int dataPerPage, int studentId) throws FindException;
 

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.my.exception.DeleteException;
+import com.my.exception.RemoveException;
 import com.my.service.CartService;
 import com.my.service.ICartService;
 
@@ -26,7 +26,7 @@ public class RemoveCartServlet extends HttpServlet {
 		try {
 			service.remove(lessonId, studentId);
 			out.print("{\"status\" : 1}");
-		} catch (DeleteException e) {
+		} catch (RemoveException e) {
 			out.print("{\"status\" : -1, \"msg\": " + e.getMessage() + "}");
 		}
 	}
