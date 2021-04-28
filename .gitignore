@@ -1,5 +1,8 @@
 /.metadata/
+<<<<<<< HEAD
 c4uback/bin
+=======
+>>>>>>> c1c322dc1e3522714fec7cfd627a7aa33c1ce97f
 c4uback/target/
 c4uback/.settings/
 c4uback/.classpath
@@ -8,4 +11,8 @@ c4uback/.springBeans
 c4ufront/.classpath
 c4ufront/.settings/
 c4ufront/.project
+<<<<<<< HEAD
 c4ufront/build
+=======
+c4ufront/build
+>>>>>>> c1c322dc1e3522714fec7cfd627a7aa33c1ce97f
