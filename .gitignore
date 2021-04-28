@@ -1,11 +1,6 @@
 /.metadata/
 c4uback/bin
 c4uback/target/
-c4uback/.settings/
 c4uback/.classpath
-c4uback/.project
-c4uback/.springBeans
 c4ufront/.classpath
-c4ufront/.settings/
-c4ufront/.project
 c4ufront/build
